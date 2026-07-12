@@ -527,6 +527,46 @@ textarea {
 }
 
 /* Projects */
+.case-study-hero {
+  margin-bottom: 2.75rem;
+}
+
+.case-study-hero img {
+  width: 100%;
+  max-height: 620px;
+  object-fit: contain;
+  background: var(--surface-sunken);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+}
+
+.case-study-body {
+  max-width: 760px;
+  margin-bottom: 2.75rem;
+}
+
+.case-study-body h3 {
+  font-family: var(--font-display);
+  margin: 2rem 0 0.7rem;
+}
+
+.case-study-body h3:first-child {
+  margin-top: 0;
+}
+
+.case-study-body p,
+.case-study-body li {
+  color: var(--ink-muted);
+}
+
+.case-study-body ul {
+  padding-left: 1.2rem;
+}
+
+.case-study-body li {
+  margin-bottom: 0.4rem;
+}
 .project-grid {
   display: grid;
   gap: 1.5rem;
@@ -539,9 +579,10 @@ textarea {
 
 .project-card img {
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
+  max-height: 320px;
+  object-fit: contain;
   background: var(--surface-sunken);
+  display: block;
 }
 
 .project-card__body {
