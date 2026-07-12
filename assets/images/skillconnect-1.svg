@@ -1,0 +1,42 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#f5f5f0"/>
+  <rect x="60" y="56" width="1080" height="688" rx="20" fill="#ffffff" stroke="#e2e2d8" stroke-width="2"/>
+  <rect x="60" y="56" width="1080" height="56" rx="20" fill="#efefe8"/>
+  <circle cx="94" cy="84" r="6" fill="#d2d2c4"/>
+  <circle cx="116" cy="84" r="6" fill="#d2d2c4"/>
+  <circle cx="138" cy="84" r="6" fill="#d2d2c4"/>
+
+  <!-- sidebar -->
+  <rect x="60" y="112" width="220" height="632" fill="#ffffff" stroke="#e2e2d8"/>
+  <rect x="96" y="150" width="150" height="16" rx="8" fill="#181b20"/>
+  <rect x="96" y="200" width="140" height="34" rx="10" fill="#1f5c4e" opacity="0.12"/>
+  <rect x="96" y="248" width="120" height="14" rx="7" fill="#8a8f96"/>
+  <rect x="96" y="284" width="130" height="14" rx="7" fill="#8a8f96"/>
+  <rect x="96" y="320" width="100" height="14" rx="7" fill="#8a8f96"/>
+
+  <!-- main profile panel -->
+  <circle cx="410" cy="220" r="56" fill="#e2e2d8"/>
+  <circle cx="410" cy="220" r="56" fill="none" stroke="#c8102e" stroke-width="3"/>
+  <rect x="490" y="182" width="260" height="22" rx="11" fill="#181b20"/>
+  <rect x="490" y="216" width="180" height="16" rx="8" fill="#8a8f96"/>
+  <rect x="490" y="246" width="140" height="30" rx="15" fill="#1f5c4e" opacity="0.1"/>
+  <text x="560" y="266" font-family="'JetBrains Mono', monospace" font-size="12" fill="#123f34" text-anchor="middle">Electrician</text>
+
+  <line x1="332" y1="320" x2="1080" y2="320" stroke="#e2e2d8" stroke-width="2"/>
+
+  <!-- booking calendar block -->
+  <rect x="332" y="360" width="340" height="300" rx="16" fill="#ffffff" stroke="#e2e2d8"/>
+  <rect x="360" y="388" width="160" height="18" rx="9" fill="#181b20"/>
+  <rect x="360" y="428" width="284" height="42" rx="10" fill="#f5f5f0" stroke="#e2e2d8"/>
+  <rect x="360" y="482" width="284" height="42" rx="10" fill="#f5f5f0" stroke="#e2e2d8"/>
+  <rect x="360" y="536" width="284" height="42" rx="10" fill="#1f5c4e" opacity="0.12"/>
+  <rect x="360" y="600" width="284" height="44" rx="22" fill="#1f5c4e"/>
+  <text x="502" y="627" font-family="'JetBrains Mono', monospace" font-size="14" fill="#f5f5f0" text-anchor="middle">Request Booking</text>
+
+  <!-- reviews block -->
+  <rect x="704" y="360" width="376" height="300" rx="16" fill="#ffffff" stroke="#e2e2d8"/>
+  <rect x="732" y="388" width="140" height="18" rx="9" fill="#181b20"/>
+  <rect x="732" y="428" width="320" height="60" rx="12" fill="#f5f5f0"/>
+  <rect x="732" y="500" width="320" height="60" rx="12" fill="#f5f5f0"/>
+  <rect x="732" y="572" width="320" height="60" rx="12" fill="#f5f5f0"/>
+</svg>

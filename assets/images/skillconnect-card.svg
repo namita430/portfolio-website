@@ -1,0 +1,56 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" fill="#f5f5f0"/>
+  <rect x="70" y="64" width="1060" height="632" rx="20" fill="#ffffff" stroke="#e2e2d8" stroke-width="2"/>
+  <!-- browser chrome -->
+  <rect x="70" y="64" width="1060" height="56" rx="20" fill="#efefe8"/>
+  <circle cx="104" cy="92" r="6" fill="#d2d2c4"/>
+  <circle cx="126" cy="92" r="6" fill="#d2d2c4"/>
+  <circle cx="148" cy="92" r="6" fill="#d2d2c4"/>
+  <rect x="480" y="80" width="220" height="24" rx="12" fill="#ffffff" stroke="#e2e2d8"/>
+  <!-- search bar -->
+  <rect x="112" y="150" width="700" height="44" rx="10" fill="#f5f5f0" stroke="#e2e2d8"/>
+  <circle cx="140" cy="172" r="7" fill="none" stroke="#8a8f96" stroke-width="2.5"/>
+  <line x1="145" y1="177" x2="153" y2="185" stroke="#8a8f96" stroke-width="2.5"/>
+  <rect x="832" y="150" width="116" height="44" rx="10" fill="#1f5c4e"/>
+  <text x="890" y="177" font-family="'JetBrains Mono', monospace" font-size="15" fill="#f5f5f0" text-anchor="middle">Search</text>
+
+  <!-- provider card 1 -->
+  <rect x="112" y="222" width="472" height="180" rx="16" fill="#ffffff" stroke="#e2e2d8"/>
+  <circle cx="176" cy="286" r="34" fill="#e2e2d8"/>
+  <rect x="228" y="264" width="200" height="18" rx="9" fill="#181b20"/>
+  <rect x="228" y="292" width="140" height="14" rx="7" fill="#8a8f96"/>
+  <!-- verified stamp -->
+  <circle cx="540" cy="260" r="30" fill="none" stroke="#c8102e" stroke-width="3"/>
+  <text x="540" y="252" font-family="'JetBrains Mono', monospace" font-size="9" fill="#c8102e" text-anchor="middle">VERIFIED</text>
+  <path d="M525 262 l10 10 l20 -22" fill="none" stroke="#c8102e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="140" y="336" width="120" height="30" rx="15" fill="#f5f5f0" stroke="#e2e2d8"/>
+  <rect x="272" y="336" width="100" height="30" rx="15" fill="#f5f5f0" stroke="#e2e2d8"/>
+  <rect x="480" y="336" width="80" height="30" rx="15" fill="#1f5c4e" opacity="0.12"/>
+  <text x="520" y="356" font-family="'JetBrains Mono', monospace" font-size="12" fill="#123f34" text-anchor="middle">Rs 800</text>
+
+  <!-- provider card 2 -->
+  <rect x="616" y="222" width="472" height="180" rx="16" fill="#ffffff" stroke="#e2e2d8"/>
+  <circle cx="680" cy="286" r="34" fill="#e2e2d8"/>
+  <rect x="732" y="264" width="180" height="18" rx="9" fill="#181b20"/>
+  <rect x="732" y="292" width="130" height="14" rx="7" fill="#8a8f96"/>
+  <circle cx="1024" cy="260" r="30" fill="none" stroke="#c8102e" stroke-width="3"/>
+  <text x="1024" y="252" font-family="'JetBrains Mono', monospace" font-size="9" fill="#c8102e" text-anchor="middle">VERIFIED</text>
+  <path d="M1009 262 l10 10 l20 -22" fill="none" stroke="#c8102e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="644" y="336" width="120" height="30" rx="15" fill="#f5f5f0" stroke="#e2e2d8"/>
+  <rect x="776" y="336" width="100" height="30" rx="15" fill="#f5f5f0" stroke="#e2e2d8"/>
+  <rect x="984" y="336" width="80" height="30" rx="15" fill="#1f5c4e" opacity="0.12"/>
+  <text x="1024" y="356" font-family="'JetBrains Mono', monospace" font-size="12" fill="#123f34" text-anchor="middle">Rs 950</text>
+
+  <!-- booking request row -->
+  <rect x="112" y="440" width="976" height="72" rx="14" fill="#ffffff" stroke="#e2e2d8"/>
+  <rect x="140" y="464" width="220" height="16" rx="8" fill="#181b20"/>
+  <rect x="140" y="486" width="160" height="12" rx="6" fill="#8a8f96"/>
+  <rect x="900" y="462" width="150" height="30" rx="15" fill="#1f5c4e"/>
+  <text x="975" y="483" font-family="'JetBrains Mono', monospace" font-size="12" fill="#f5f5f0" text-anchor="middle">Booked</text>
+
+  <rect x="112" y="532" width="976" height="72" rx="14" fill="#ffffff" stroke="#e2e2d8"/>
+  <rect x="140" y="556" width="240" height="16" rx="8" fill="#181b20"/>
+  <rect x="140" y="578" width="150" height="12" rx="6" fill="#8a8f96"/>
+  <rect x="900" y="554" width="150" height="30" rx="15" fill="#efefe8" stroke="#e2e2d8"/>
+  <text x="975" y="575" font-family="'JetBrains Mono', monospace" font-size="12" fill="#5b6068" text-anchor="middle">Pending</text>
+</svg>

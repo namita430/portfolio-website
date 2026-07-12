@@ -1,0 +1,57 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" fill="#f5f5f0"/>
+  <rect x="70" y="64" width="1060" height="632" rx="20" fill="#ffffff" stroke="#e2e2d8" stroke-width="2"/>
+  <rect x="70" y="64" width="1060" height="56" rx="20" fill="#efefe8"/>
+  <circle cx="104" cy="92" r="6" fill="#d2d2c4"/>
+  <circle cx="126" cy="92" r="6" fill="#d2d2c4"/>
+  <circle cx="148" cy="92" r="6" fill="#d2d2c4"/>
+  <rect x="900" y="80" width="130" height="24" rx="12" fill="#1f5c4e" opacity="0.12"/>
+  <circle cx="916" cy="92" r="5" fill="#1f5c4e"/>
+  <text x="975" y="97" font-family="'JetBrains Mono', monospace" font-size="11" fill="#123f34" text-anchor="middle">Live sync</text>
+
+  <!-- table grid -->
+  <g>
+    <rect x="112" y="150" width="150" height="110" rx="14" fill="#1f5c4e" opacity="0.1" stroke="#1f5c4e"/>
+    <text x="187" y="196" font-family="'Space Grotesk', sans-serif" font-size="20" fill="#123f34" text-anchor="middle">Table 4</text>
+    <text x="187" y="222" font-family="'JetBrains Mono', monospace" font-size="11" fill="#123f34" text-anchor="middle">Occupied</text>
+  </g>
+  <g>
+    <rect x="278" y="150" width="150" height="110" rx="14" fill="#ffffff" stroke="#e2e2d8"/>
+    <text x="353" y="196" font-family="'Space Grotesk', sans-serif" font-size="20" fill="#181b20" text-anchor="middle">Table 5</text>
+    <text x="353" y="222" font-family="'JetBrains Mono', monospace" font-size="11" fill="#8a8f96" text-anchor="middle">Available</text>
+  </g>
+  <g>
+    <rect x="444" y="150" width="150" height="110" rx="14" fill="#1f5c4e" opacity="0.1" stroke="#1f5c4e"/>
+    <text x="519" y="196" font-family="'Space Grotesk', sans-serif" font-size="20" fill="#123f34" text-anchor="middle">Table 6</text>
+    <text x="519" y="222" font-family="'JetBrains Mono', monospace" font-size="11" fill="#123f34" text-anchor="middle">Occupied</text>
+  </g>
+
+  <!-- order ticket -->
+  <rect x="632" y="150" width="396" height="360" rx="16" fill="#ffffff" stroke="#e2e2d8"/>
+  <rect x="660" y="176" width="180" height="18" rx="9" fill="#181b20"/>
+  <text x="948" y="190" font-family="'JetBrains Mono', monospace" font-size="12" fill="#8a8f96" text-anchor="end">#0042</text>
+  <line x1="660" y1="210" x2="1000" y2="210" stroke="#e2e2d8"/>
+
+  <g>
+    <rect x="660" y="228" width="12" height="12" rx="2" fill="#1f5c4e"/>
+    <rect x="686" y="224" width="200" height="14" rx="7" fill="#181b20"/>
+    <text x="1000" y="236" font-family="'JetBrains Mono', monospace" font-size="12" fill="#5b6068" text-anchor="end">Rs 320</text>
+  </g>
+  <g>
+    <rect x="660" y="264" width="12" height="12" rx="2" fill="#1f5c4e"/>
+    <rect x="686" y="260" width="160" height="14" rx="7" fill="#181b20"/>
+    <text x="1000" y="272" font-family="'JetBrains Mono', monospace" font-size="12" fill="#5b6068" text-anchor="end">Rs 180</text>
+  </g>
+  <g>
+    <rect x="660" y="300" width="12" height="12" rx="2" fill="#e2e2d8"/>
+    <rect x="686" y="296" width="180" height="14" rx="7" fill="#8a8f96"/>
+    <text x="1000" y="308" font-family="'JetBrains Mono', monospace" font-size="12" fill="#8a8f96" text-anchor="end">Rs 240</text>
+  </g>
+
+  <line x1="660" y1="340" x2="1000" y2="340" stroke="#e2e2d8"/>
+  <text x="660" y="374" font-family="'JetBrains Mono', monospace" font-size="14" fill="#181b20">Total</text>
+  <text x="1000" y="374" font-family="'Space Grotesk', sans-serif" font-size="20" fill="#123f34" text-anchor="end">Rs 740</text>
+
+  <rect x="660" y="418" width="340" height="46" rx="23" fill="#1f5c4e"/>
+  <text x="830" y="447" font-family="'JetBrains Mono', monospace" font-size="14" fill="#f5f5f0" text-anchor="middle">Print Bill</text>
+</svg>

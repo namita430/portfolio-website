@@ -1,0 +1,53 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#f5f5f0"/>
+  <rect x="60" y="56" width="1080" height="688" rx="20" fill="#ffffff" stroke="#e2e2d8" stroke-width="2"/>
+  <rect x="60" y="56" width="1080" height="56" rx="20" fill="#efefe8"/>
+  <circle cx="94" cy="84" r="6" fill="#d2d2c4"/>
+  <circle cx="116" cy="84" r="6" fill="#d2d2c4"/>
+  <circle cx="138" cy="84" r="6" fill="#d2d2c4"/>
+  <text x="600" y="90" font-family="'JetBrains Mono', monospace" font-size="12" fill="#5b6068" text-anchor="middle">smartbite / menu</text>
+
+  <!-- category tabs -->
+  <rect x="100" y="140" width="110" height="36" rx="18" fill="#1f5c4e"/>
+  <text x="155" y="163" font-family="'JetBrains Mono', monospace" font-size="12" fill="#f5f5f0" text-anchor="middle">Momo</text>
+  <rect x="222" y="140" width="110" height="36" rx="18" fill="#efefe8"/>
+  <text x="277" y="163" font-family="'JetBrains Mono', monospace" font-size="12" fill="#5b6068" text-anchor="middle">Thali</text>
+  <rect x="344" y="140" width="130" height="36" rx="18" fill="#efefe8"/>
+  <text x="409" y="163" font-family="'JetBrains Mono', monospace" font-size="12" fill="#5b6068" text-anchor="middle">Beverages</text>
+
+  <!-- menu items grid -->
+  <g>
+    <rect x="100" y="204" width="230" height="200" rx="14" fill="#ffffff" stroke="#e2e2d8"/>
+    <rect x="100" y="204" width="230" height="110" rx="14" fill="#efefe8"/>
+    <rect x="120" y="332" width="150" height="16" rx="8" fill="#181b20"/>
+    <rect x="120" y="358" width="80" height="14" rx="7" fill="#8a8f96"/>
+    <circle cx="290" cy="370" r="18" fill="#1f5c4e"/>
+    <text x="290" y="375" font-family="'Space Grotesk', sans-serif" font-size="16" fill="#f5f5f0" text-anchor="middle">+</text>
+  </g>
+  <g>
+    <rect x="352" y="204" width="230" height="200" rx="14" fill="#ffffff" stroke="#e2e2d8"/>
+    <rect x="352" y="204" width="230" height="110" rx="14" fill="#efefe8"/>
+    <rect x="372" y="332" width="150" height="16" rx="8" fill="#181b20"/>
+    <rect x="372" y="358" width="80" height="14" rx="7" fill="#8a8f96"/>
+    <circle cx="542" cy="370" r="18" fill="#1f5c4e"/>
+    <text x="542" y="375" font-family="'Space Grotesk', sans-serif" font-size="16" fill="#f5f5f0" text-anchor="middle">+</text>
+  </g>
+  <g>
+    <rect x="604" y="204" width="230" height="200" rx="14" fill="#ffffff" stroke="#e2e2d8"/>
+    <rect x="604" y="204" width="230" height="110" rx="14" fill="#efefe8"/>
+    <rect x="624" y="332" width="150" height="16" rx="8" fill="#181b20"/>
+    <rect x="624" y="358" width="80" height="14" rx="7" fill="#8a8f96"/>
+    <circle cx="794" cy="370" r="18" fill="#1f5c4e"/>
+    <text x="794" y="375" font-family="'Space Grotesk', sans-serif" font-size="16" fill="#f5f5f0" text-anchor="middle">+</text>
+  </g>
+
+  <!-- current order side panel -->
+  <rect x="864" y="140" width="216" height="500" rx="16" fill="#ffffff" stroke="#e2e2d8"/>
+  <rect x="888" y="164" width="140" height="16" rx="8" fill="#181b20"/>
+  <rect x="888" y="204" width="168" height="1" fill="#e2e2d8"/>
+  <rect x="888" y="224" width="120" height="14" rx="7" fill="#5b6068"/>
+  <rect x="888" y="256" width="120" height="14" rx="7" fill="#5b6068"/>
+  <rect x="888" y="288" width="120" height="14" rx="7" fill="#5b6068"/>
+  <rect x="888" y="560" width="168" height="44" rx="22" fill="#1f5c4e"/>
+  <text x="972" y="587" font-family="'JetBrains Mono', monospace" font-size="13" fill="#f5f5f0" text-anchor="middle">Place Order</text>
+</svg>

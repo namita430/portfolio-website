@@ -1,0 +1,96 @@
+/* Mobile-first responsive behaviors */
+
+@media (min-width: 640px) {
+  .hero-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+
+  .about-grid,
+  .contact-grid,
+  .github-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .skills-grid,
+  .cert-grid,
+  .project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .timeline-item {
+    grid-template-columns: 110px 1fr;
+    align-items: start;
+  }
+
+  .footer-row {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 3.75rem 0;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-bottom: 3rem;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card {
+    justify-self: stretch;
+    width: 100%;
+    max-width: none;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .hero-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .github-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    padding: 0.6rem 0.2rem;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .section-heading h2,
+  .section-heading h1 {
+    font-size: 1.7rem;
+  }
+}
