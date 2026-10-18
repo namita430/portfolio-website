@@ -52,7 +52,7 @@ export function Hero() {
       <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-60" />
 
       <Container className="grid items-center gap-14 pb-24 pt-14 sm:pt-20 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:pb-32 lg:pt-28">
-        <div>
+        <div className="min-w-0">
           <motion.div {...item(0)}>
             <RotatingRoles roles={profile.titles} />
           </motion.div>
@@ -102,7 +102,7 @@ export function Hero() {
           </motion.div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-lg lg:max-w-none">
+        <div className="relative mx-auto w-full min-w-0 max-w-lg lg:max-w-none">
           {profile.profileImage && (
             <motion.div {...item(0.2)} className="border-gradient relative ml-auto aspect-[4/5] w-48 overflow-hidden rounded-3xl bg-surface sm:w-60">
               <img

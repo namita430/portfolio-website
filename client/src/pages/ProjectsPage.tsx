@@ -11,7 +11,7 @@ import { ProjectCard } from '@/components/projects/ProjectCard';
 
 const PAGE_SIZE = 9;
 const selectClass =
-  'h-11 rounded-xl border border-line-strong bg-bg px-3 text-sm text-fg transition focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/40';
+  'h-11 min-w-0 flex-1 rounded-xl border border-line-strong bg-bg px-3 text-sm text-fg transition focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/40 sm:flex-none';
 
 export function ProjectsPage() {
   const site = useSite();
