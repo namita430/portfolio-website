@@ -1,0 +1,70 @@
+# ---------------------------------------------------------------------------------------------------------------
+# GitHub Actions workflow TEMPLATE. To switch it on, copy this file to  .github/workflows/ci.yml  in the repository.
+# It lives in docs/ because GitHub only accepts workflow files from a login with the "workflow" permission (or when
+# the file is added through the GitHub website: Add file -> Create new file -> .github/workflows/ci.yml).
+# It has not been run on GitHub yet; each of its steps was run locally from a fresh clone.
+# ---------------------------------------------------------------------------------------------------------------
+name: CI
+
+# Type-checks, tests and builds both packages on every push and pull request.
+# (The browser tests in e2e/ need a running stack and a real browser, so they are run by hand — see e2e/README.md.)
+on:
+  push:
+    branches: [main, namita]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  client:
+    name: Frontend (type-check, tests, build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  server:
+    name: Backend (type-check, API tests, build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: root          # throw-away database that only exists for this job
+          MYSQL_DATABASE: portfolio_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+    env:
+      # The test suite swaps the database name for `portfolio_test` and refuses to run against any other name.
+      DATABASE_URL: mysql://root:root@127.0.0.1:3306/portfolio_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+      - run: npm ci
+      - run: npm run build       # prisma generate + TypeScript compile
+      - run: npm run typecheck   # also type-checks the tests and scripts
+      - run: npm test            # applies the real migrations, then runs the API suite

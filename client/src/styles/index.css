@@ -83,11 +83,11 @@
   --subtle: #6c685f;
   --line: rgb(23 24 26 / 0.12);
   --line-strong: rgb(23 24 26 / 0.28);
-  --accent: #b0501a;
+  --accent: #9c4312;
   --accent-fg: #ffffff;
-  --accent-soft: rgb(176 80 26 / 0.1);
+  --accent-soft: rgb(156 67 18 / 0.1);
   --danger: #b3261e;
-  --success: #1e7a46;
+  --success: #17693b;
   color-scheme: light;
 }
 
@@ -291,6 +291,18 @@ dialog.lightbox::backdrop {
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--line-strong) transparent;
+}
+
+/* Printing / saving as PDF: show everything, even content that has not been scrolled into view yet */
+@media print {
+  [style*='opacity: 0'] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .skip-link,
+  header[class*='sticky'] {
+    display: none !important;
+  }
 }
 
 /* ---------------------------------------------------------------------------

@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'motion/react';
+import { useReducedMotion } from 'motion/react';
+import * as m from 'motion/react-m';
 import { Link } from 'react-router-dom';
 import { ArrowDownToLine, ArrowRight } from 'lucide-react';
 import { useProjects, useSite, useSkills } from '@/hooks/usePublicData';
@@ -53,19 +54,19 @@ export function Hero() {
 
       <Container className="grid items-center gap-14 pb-24 pt-14 sm:pt-20 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:pb-32 lg:pt-28">
         <div className="min-w-0">
-          <motion.div {...item(0)}>
+          <m.div {...item(0)}>
             <RotatingRoles roles={profile.titles} />
-          </motion.div>
+          </m.div>
 
-          <motion.h1 {...item(0.08)} id="hero-title" className="mt-6 font-display text-[2.6rem] leading-[1.04] tracking-tight text-balance sm:text-6xl lg:text-[4.4rem]">
+          <m.h1 {...item(0.08)} id="hero-title" className="mt-6 font-display text-[2.6rem] leading-[1.04] tracking-tight text-balance sm:text-6xl lg:text-[4.4rem]">
             <Headline text={settings.heroHeadline} />
-          </motion.h1>
+          </m.h1>
 
-          <motion.p {...item(0.16)} className="mt-6 max-w-xl text-lg leading-relaxed text-muted text-pretty sm:text-xl">
+          <m.p {...item(0.16)} className="mt-6 max-w-xl text-lg leading-relaxed text-muted text-pretty sm:text-xl">
             {settings.heroSubtext}
-          </motion.p>
+          </m.p>
 
-          <motion.div {...item(0.24)} className="mt-9 flex flex-wrap items-center gap-3">
+          <m.div {...item(0.24)} className="mt-9 flex flex-wrap items-center gap-3">
             {exploreTarget && (
               <Link to={{ pathname: '/', hash: exploreTarget }} className={buttonClasses('primary', 'lg')}>
                 Explore My Work <ArrowRight className="size-4" aria-hidden="true" />
@@ -85,9 +86,9 @@ export function Hero() {
                 <ArrowDownToLine className="size-4" aria-hidden="true" /> Resume
               </a>
             )}
-          </motion.div>
+          </m.div>
 
-          <motion.div {...item(0.32)} className="mt-9 flex items-center gap-3">
+          <m.div {...item(0.32)} className="mt-9 flex items-center gap-3">
             {github && (
               <a href={github} target="_blank" rel="noopener noreferrer" className={iconLink} aria-label="GitHub profile (opens in a new tab)">
                 <GitHubIcon className="size-5" />
@@ -99,12 +100,12 @@ export function Hero() {
               </a>
             )}
             <span className="ml-1 font-mono text-xs uppercase tracking-[0.14em] text-subtle">{profile.location}</span>
-          </motion.div>
+          </m.div>
         </div>
 
         <div className="relative mx-auto w-full min-w-0 max-w-lg lg:max-w-none">
           {profile.profileImage && (
-            <motion.div {...item(0.2)} className="border-gradient relative ml-auto aspect-[4/5] w-48 overflow-hidden rounded-3xl bg-surface sm:w-60">
+            <m.div {...item(0.2)} className="border-gradient relative ml-auto aspect-[4/5] w-48 overflow-hidden rounded-3xl bg-surface sm:w-60">
               <img
                 src={profile.profileImage.url}
                 alt={`Portrait of ${profile.fullName}`}
@@ -113,7 +114,7 @@ export function Hero() {
                 className="size-full object-cover"
                 fetchPriority="high"
               />
-            </motion.div>
+            </m.div>
           )}
           <CodeWindow profile={profile} skills={skills.data} projects={projects.data?.data} className={profile.profileImage ? '-mt-24 mr-auto w-[92%]' : ''} />
         </div>

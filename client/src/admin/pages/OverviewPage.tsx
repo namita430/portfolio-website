@@ -61,7 +61,7 @@ export function OverviewPage() {
             {!hasResume && (
               <li>
                 No resume uploaded yet — visitors will not see a download button.{' '}
-                <Link to="/admin/resume" className="text-accent hover:underline">
+                <Link to="/admin/resume" className="text-accent underline underline-offset-2 hover:no-underline">
                   Upload one
                 </Link>
               </li>
@@ -69,7 +69,7 @@ export function OverviewPage() {
             {draftCerts > 0 && (
               <li>
                 {draftCerts} certificate{draftCerts === 1 ? ' is' : 's are'} still a draft. Attach the certificate file or a verification link, then publish.{' '}
-                <Link to="/admin/certificates" className="text-accent hover:underline">
+                <Link to="/admin/certificates" className="text-accent underline underline-offset-2 hover:no-underline">
                   Review
                 </Link>
               </li>

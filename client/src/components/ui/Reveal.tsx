@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import { motion } from 'motion/react';
+import { useReducedMotion } from 'motion/react';
+import * as m from 'motion/react-m';
 
 interface RevealProps {
   children: ReactNode;
@@ -10,12 +11,15 @@ interface RevealProps {
 }
 
 /**
- * Fades content up once when scrolled into view. Wrapped by <MotionConfig reducedMotion="user"> at the app
- * root, so visitors who prefer reduced motion get the content without the movement.
+ * Fades content up once when scrolled into view. Visitors who ask for reduced motion get the content straight away,
+ * with no hiding and no animation at all (printing is handled in the stylesheet).
  */
 export function Reveal({ children, delay = 0, className, y = 18 }: RevealProps) {
+  const reduceMotion = useReducedMotion();
+  if (reduceMotion) return <div className={className}>{children}</div>;
+
   return (
-    <motion.div
+    <m.div
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -23,6 +27,6 @@ export function Reveal({ children, delay = 0, className, y = 18 }: RevealProps) 
       transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
