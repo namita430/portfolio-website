@@ -1,39 +1,67 @@
-# Namita Giri Portfolio
+# Namita Giri — Full-Stack Portfolio
 
-A light, minimal personal portfolio for Namita Giri, built with plain HTML, CSS, and vanilla
-JavaScript — no build step required.
+A full-stack portfolio with a database-backed admin dashboard, so projects, certificates, skills, journey entries,
+the resume and site settings can all be managed without editing code.
 
-## Structure
+> **Work in progress.** The backend is complete and tested. The public site and the admin dashboard are written and
+> compile, but have not yet been reviewed in a browser. Deployment guides and configuration files are still to come.
 
-- `index.html` – homepage
-- `project.html` – projects landing page
-- `certificates.html` – certificates page
-- `projects/skillconnect.html` – SkillConnect Nepal case study
-- `projects/smartbite.html` – SmartBite case study
-- `css/` – modular stylesheets (`style.css` holds the design tokens and core layout)
-- `js/` – interactive behavior (nav, reveal-on-scroll, typing effect, lightbox gallery)
-- `assets/` – images, icons, and resume PDF
+## Stack
 
-## Design notes
+| Part | Technology |
+| --- | --- |
+| Frontend (`client/`) | React, Vite, TypeScript, Tailwind CSS, Motion, React Router, React Hook Form, Zod, TanStack Query |
+| Backend (`server/`) | Node.js, Express, TypeScript, Zod, Prisma ORM |
+| Database | MySQL 8 |
+| Files | S3-compatible object storage (Cloudflare R2, Backblaze B2, …); local disk in development only |
+| Auth | Server-side sessions in HTTP-only cookies, Argon2id, CSRF tokens, login rate limiting |
 
-- Palette: warm paper background, deep pine-green accent, sparing brass highlight — tokens
-  live at the top of `css/style.css` as CSS custom properties.
-- Type: Space Grotesk (headings), IBM Plex Sans (body), JetBrains Mono (labels/meta) — matches
-  the same mono-and-serif-free system used in the SkillConnect Nepal product design.
-- Sections sit on one continuous background separated by spacing and a hairline rule rather
-  than alternating color blocks.
+## Run it locally
 
-## Deploying to Netlify
+You need Node.js 20+ and a MySQL 8 database.
 
-1. Push this folder to a GitHub repo (or drag-and-drop the folder into Netlify's deploy UI).
-2. No build command or publish directory override needed — this is a static site, so set the
-   publish directory to the repo root.
-3. Update `assets/resume/Namita_Giri_resume.pdf` whenever the resume changes — it's linked
-   directly from the hero and resume sections.
+```bash
+# 1. Backend
+cd server
+cp .env.example .env          # then edit DATABASE_URL, SESSION_SECRET, ...
+npm install
+npx prisma migrate deploy     # creates the tables
+npm run db:seed               # first-run content (only runs on an empty database)
+npm run admin:create          # interactive: choose your admin username and password
+npm run dev                   # http://localhost:4000
 
-## Notes
+# 2. Frontend (new terminal)
+cd client
+npm install
+npm run dev                   # http://localhost:5173  (admin at /admin)
+```
 
-- Project screenshots in `assets/images/` are illustrative mockups, not literal app
-  screenshots — swap in real screenshots of SkillConnect Nepal and SmartBite when you have
-  clean ones to show.
-- Update project links and copy as the portfolio grows.
+There is no default admin account and no default password; `npm run admin:create` is the only way to create one.
+
+## Tests
+
+```bash
+cd server && npm test         # needs a MySQL user that can create the `portfolio_test` database
+```
+
+The suite refuses to run against any database whose name does not end in `_test`.
+
+## Security notes
+
+- Secrets live only in environment variables; `.env` files are git-ignored.
+- Public API responses contain published content only; every admin route requires a session and a CSRF token.
+- Uploads are validated by file signature, extension, declared type and size; images are re-encoded.
+
+## Content policy
+
+The seed data only contains information the owner supplied. Certificates are created as unpublished drafts and cannot
+be published until a certificate file or a verification link is attached.
+
+## Legacy static version
+
+The repository root still contains the original static portfolio (plain HTML, CSS and vanilla JavaScript:
+`index.html`, `project.html`, `certificates.html`, `projects/`, `css/`, `js/` and `assets/`). It is unchanged and keeps
+working exactly as before; its original README is kept in [README-static-site.md](README-static-site.md).
+
+The full-stack version lives in `client/` (React frontend) and `server/` (Express + MySQL API). Once the full-stack
+site is deployed, the legacy files can be removed.
