@@ -1,0 +1,350 @@
+// Prisma schema for Namita Giri's portfolio (MySQL 8).
+// Migrations are applied with `prisma migrate deploy` in production.
+// Never use `prisma db push` against a production database.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  // Managed providers (e.g. Aiven) do not support foreign-key-less modes; keep default.
+  relationMode = "foreignKeys"
+}
+
+// ---------------------------------------------------------------------------
+// Authentication
+// ---------------------------------------------------------------------------
+
+model AdminUser {
+  id               Int       @id @default(autoincrement())
+  username         String    @unique @db.VarChar(64)
+  passwordHash     String    @db.VarChar(255)
+  displayName      String?   @db.VarChar(120)
+  failedLoginCount Int       @default(0)
+  lockedUntil      DateTime?
+  lastLoginAt      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  sessions         Session[]
+}
+
+/// Server-side session. `id` is the SHA-256 hash of the random token that lives in the
+/// HTTP-only cookie, so a database leak does not expose usable session tokens.
+model Session {
+  id         String    @id @db.Char(64)
+  userId     Int
+  csrfToken  String    @db.VarChar(64)
+  ipAddress  String?   @db.VarChar(64)
+  userAgent  String?   @db.VarChar(255)
+  createdAt  DateTime  @default(now())
+  lastSeenAt DateTime  @default(now())
+  expiresAt  DateTime
+  user       AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+// ---------------------------------------------------------------------------
+// Files (metadata only — the bytes live in object storage)
+// ---------------------------------------------------------------------------
+
+enum AssetPurpose {
+  PROJECT_COVER
+  PROJECT_IMAGE
+  CERTIFICATE
+  RESUME
+  PROFILE
+  JOURNEY_DOC
+}
+
+model FileAsset {
+  id           Int          @id @default(autoincrement())
+  storageKey   String       @unique @db.VarChar(255)
+  url          String       @db.VarChar(1024)
+  originalName String       @db.VarChar(255)
+  mimeType     String       @db.VarChar(100)
+  sizeBytes    Int
+  width        Int?
+  height       Int?
+  purpose      AssetPurpose
+  createdAt    DateTime     @default(now())
+
+  projectCovers  Project[]         @relation("ProjectCover")
+  projectImages  ProjectImage[]
+  certFiles      Certificate[]     @relation("CertificateFile")
+  certThumbs     Certificate[]     @relation("CertificateThumb")
+  journeyDocs    ExperienceEntry[]
+  profileImages  Profile[]
+  resumes        ResumeAsset[]
+
+  @@index([purpose, createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Profile & site settings (singleton rows, id = 1)
+// ---------------------------------------------------------------------------
+
+model Profile {
+  id             Int        @id @default(1)
+  fullName       String     @db.VarChar(120)
+  /// Rotating role titles shown in the hero. JSON array of strings.
+  titles         Json
+  introduction   String     @db.Text
+  objective      String?    @db.VarChar(500)
+  aboutTitle     String     @db.VarChar(160)
+  aboutBody      String     @db.Text
+  /// JSON array of { label: string, value: string } highlights shown beside About.
+  aboutHighlights Json
+  location       String     @db.VarChar(120)
+  email          String     @db.VarChar(190)
+  githubUrl      String?    @db.VarChar(255)
+  linkedinUrl    String?    @db.VarChar(255)
+  profileImageId Int?
+  profileImage   FileAsset? @relation(fields: [profileImageId], references: [id], onDelete: SetNull)
+  updatedAt      DateTime   @updatedAt
+}
+
+model SiteSettings {
+  id                Int      @id @default(1)
+  siteTitle         String   @db.VarChar(160)
+  siteDescription   String   @db.VarChar(320)
+  heroHeadline      String   @db.VarChar(200)
+  heroSubtext       String   @db.VarChar(500)
+  theme             String   @default("ember") @db.VarChar(32)
+  /// JSON object: { about, skills, projects, certificates, journey, contact } -> boolean
+  sectionVisibility Json
+  footerText        String   @db.VarChar(300)
+  showResumeButton  Boolean  @default(true)
+  updatedAt         DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Tags (shared by projects and journey entries via junction tables)
+// ---------------------------------------------------------------------------
+
+model Tag {
+  id       Int               @id @default(autoincrement())
+  name     String            @unique @db.VarChar(60)
+  slug     String            @unique @db.VarChar(80)
+  projects ProjectTag[]
+  entries  ExperienceTag[]
+}
+
+// ---------------------------------------------------------------------------
+// Projects
+// ---------------------------------------------------------------------------
+
+enum ProjectStatus {
+  CONCEPT
+  IN_PROGRESS
+  LIVE_DEMO
+  COMPLETED
+  ARCHIVED
+}
+
+model Project {
+  id               Int           @id @default(autoincrement())
+  slug             String        @unique @db.VarChar(120)
+  title            String        @db.VarChar(160)
+  tagline          String?       @db.VarChar(200)
+  shortDescription String        @db.VarChar(320)
+  description      String        @db.Text
+  category         String        @db.VarChar(80)
+  status           ProjectStatus @default(IN_PROGRESS)
+  githubUrl        String?       @db.VarChar(500)
+  liveUrl          String?       @db.VarChar(500)
+  /// JSON array of strings.
+  features         Json
+  /// JSON array of { challenge: string, solution: string }.
+  challenges       Json
+  lessonsLearned   String?       @db.Text
+  publishedAt      DateTime?
+  isFeatured       Boolean       @default(false)
+  isPublished      Boolean       @default(false)
+  sortOrder        Int           @default(0)
+  coverImageId     Int?
+  coverImage       FileAsset?    @relation("ProjectCover", fields: [coverImageId], references: [id], onDelete: SetNull)
+  images           ProjectImage[]
+  tags             ProjectTag[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([isPublished, sortOrder])
+  @@index([isFeatured, isPublished])
+  @@index([category])
+}
+
+model ProjectImage {
+  id        Int       @id @default(autoincrement())
+  projectId Int
+  assetId   Int
+  altText   String?   @db.VarChar(200)
+  sortOrder Int       @default(0)
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  asset     FileAsset @relation(fields: [assetId], references: [id], onDelete: Restrict)
+
+  @@unique([projectId, assetId])
+  @@index([projectId, sortOrder])
+}
+
+model ProjectTag {
+  projectId Int
+  tagId     Int
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, tagId])
+  @@index([tagId])
+}
+
+// ---------------------------------------------------------------------------
+// Skills
+// ---------------------------------------------------------------------------
+
+model SkillCategory {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique @db.VarChar(80)
+  description String?  @db.VarChar(300)
+  /// Key into the client's icon map (e.g. "layout", "server", "wrench", "sparkles").
+  icon        String   @default("code") @db.VarChar(32)
+  sortOrder   Int      @default(0)
+  isVisible   Boolean  @default(true)
+  skills      Skill[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isVisible, sortOrder])
+}
+
+model Skill {
+  id         Int           @id @default(autoincrement())
+  categoryId Int
+  name       String        @db.VarChar(80)
+  /// Optional honest qualifier, e.g. "Learning" or "Used in projects". No percentages.
+  note       String?       @db.VarChar(80)
+  sortOrder  Int           @default(0)
+  isVisible  Boolean       @default(true)
+  category   SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, name])
+  @@index([categoryId, sortOrder])
+}
+
+// ---------------------------------------------------------------------------
+// Certificates
+// ---------------------------------------------------------------------------
+
+model Certificate {
+  id              Int        @id @default(autoincrement())
+  title           String     @db.VarChar(200)
+  issuer          String     @db.VarChar(160)
+  issueDate       DateTime?  @db.Date
+  credentialId    String?    @db.VarChar(120)
+  verificationUrl String?    @db.VarChar(500)
+  description     String?    @db.Text
+  category        String     @db.VarChar(80)
+  fileId          Int?
+  thumbnailId     Int?
+  file            FileAsset? @relation("CertificateFile", fields: [fileId], references: [id], onDelete: SetNull)
+  thumbnail       FileAsset? @relation("CertificateThumb", fields: [thumbnailId], references: [id], onDelete: SetNull)
+  isFeatured      Boolean    @default(false)
+  isPublished     Boolean    @default(false)
+  sortOrder       Int        @default(0)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([isPublished, sortOrder])
+  @@index([category])
+}
+
+// ---------------------------------------------------------------------------
+// Journey (timeline)
+// ---------------------------------------------------------------------------
+
+enum ExperienceType {
+  TRAINING
+  INTERNSHIP
+  WORKSHOP
+  WEBINAR
+  DEVELOPMENT
+  LEADERSHIP
+  EMPLOYMENT
+  EDUCATION
+  OTHER
+}
+
+model ExperienceEntry {
+  id           Int             @id @default(autoincrement())
+  type         ExperienceType
+  title        String          @db.VarChar(200)
+  organization String          @db.VarChar(160)
+  role         String?         @db.VarChar(160)
+  location     String?         @db.VarChar(120)
+  startDate    DateTime?       @db.Date
+  endDate      DateTime?       @db.Date
+  isCurrent    Boolean         @default(false)
+  description  String?        @db.Text
+  documentId   Int?
+  document     FileAsset?      @relation(fields: [documentId], references: [id], onDelete: SetNull)
+  tags         ExperienceTag[]
+  isPublished  Boolean         @default(false)
+  sortOrder    Int             @default(0)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([isPublished, sortOrder])
+  @@index([type])
+}
+
+model ExperienceTag {
+  entryId Int
+  tagId   Int
+  entry   ExperienceEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  tag     Tag             @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([entryId, tagId])
+  @@index([tagId])
+}
+
+// ---------------------------------------------------------------------------
+// Resume
+// ---------------------------------------------------------------------------
+
+model ResumeAsset {
+  id         Int       @id @default(autoincrement())
+  assetId    Int
+  isActive   Boolean   @default(false)
+  uploadedAt DateTime  @default(now())
+  asset      FileAsset @relation(fields: [assetId], references: [id], onDelete: Restrict)
+
+  @@index([isActive, uploadedAt])
+}
+
+// ---------------------------------------------------------------------------
+// Contact inbox
+// ---------------------------------------------------------------------------
+
+enum EmailStatus {
+  NOT_CONFIGURED
+  SENT
+  FAILED
+}
+
+model ContactMessage {
+  id          Int         @id @default(autoincrement())
+  name        String      @db.VarChar(120)
+  email       String      @db.VarChar(190)
+  subject     String      @db.VarChar(200)
+  message     String      @db.Text
+  isRead      Boolean     @default(false)
+  /// SHA-256 of IP + server secret: lets the admin spot repeat senders without storing raw IPs.
+  ipHash      String?     @db.Char(64)
+  emailStatus EmailStatus @default(NOT_CONFIGURED)
+  createdAt   DateTime    @default(now())
+
+  @@index([isRead, createdAt])
+  @@index([createdAt])
+}

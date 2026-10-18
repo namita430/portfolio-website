@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Environment files (never commit real credentials) — examples are allowed
+.env
+.env.*
+!.env.example
+
+# Build output & generated files
+dist/
+build/
+coverage/
+*.tsbuildinfo
+.vite/
+.netlify/
+
+# Local dev data (private MySQL instance, uploads, logs)
+.dev/
+server/uploads/
+server/.certs/
+*.log
+
+# Local assistant handoff notes (contain machine-specific paths) — not part of the public repo
+CLAUDE.md
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
