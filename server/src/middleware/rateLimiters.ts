@@ -14,9 +14,12 @@ function limiter(opts: Partial<Options> & { windowMs: number; limit: number; mes
   });
 }
 
+// A broad safety net only. It is generous on purpose: many visitors can share one network address (an office,
+// a college), and a single page view makes several API calls. The sensitive endpoints below have their own,
+// much tighter limits.
 export const globalLimiter = limiter({
   windowMs: 15 * 60 * 1000,
-  limit: 600,
+  limit: 2000,
   message: 'Too many requests. Please slow down.',
 });
 

@@ -1,5 +1,6 @@
 import { useId, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
-import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react';
+import { AnimatePresence, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react';
+import * as m from 'motion/react-m';
 import { cn } from '@/lib/cn';
 import type { Profile, ProjectListItem, SkillCategory } from '@/types/api';
 import { buildSnippets, type TokenType } from './codeSnippets';
@@ -32,6 +33,8 @@ export function CodeWindow({ profile, skills, projects, className }: CodeWindowP
   const uid = useId();
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const current = snippets[Math.min(active, snippets.length - 1)]!;
+  // Every tab gets the same panel height (long tabs scroll inside it), so switching tabs never moves the page below.
+  const panelRows = Math.min(Math.max(...snippets.map((s) => s.lines.length)), 18);
 
   // pointer-driven tilt
   const px = useMotionValue(0);
@@ -64,7 +67,7 @@ export function CodeWindow({ profile, skills, projects, className }: CodeWindowP
   };
 
   return (
-    <motion.div
+    <m.div
       className={cn('[perspective:1100px]', className)}
       onPointerMove={onPointerMove}
       onPointerLeave={resetTilt}
@@ -72,7 +75,7 @@ export function CodeWindow({ profile, skills, projects, className }: CodeWindowP
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
     >
-      <motion.div
+      <m.div
         style={reduce ? undefined : { rotateX, rotateY, transformStyle: 'preserve-3d' }}
         className="border-gradient overflow-hidden rounded-2xl bg-surface shadow-[0_40px_80px_-40px_rgb(0_0_0/0.7)]"
       >
@@ -108,11 +111,18 @@ export function CodeWindow({ profile, skills, projects, className }: CodeWindowP
         </div>
 
         {/* code */}
-        <div id={`${uid}-panel`} role="tabpanel" aria-labelledby={`${uid}-tab-${active}`} tabIndex={0} className="min-h-[19rem] overflow-x-auto p-5 font-mono text-[0.8rem] leading-[1.75] sm:text-[0.84rem]">
+        <div
+          id={`${uid}-panel`}
+          role="tabpanel"
+          aria-labelledby={`${uid}-tab-${active}`}
+          tabIndex={0}
+          style={{ height: `calc(${panelRows} * 1.75em + 2.5rem)` }}
+          className="overflow-auto p-5 font-mono text-[0.8rem] leading-[1.75] sm:text-[0.84rem]"
+        >
           <AnimatePresence mode="wait" initial={false}>
-            <motion.ol key={current.file} initial="hidden" animate="show" exit={{ opacity: 0 }} transition={{ duration: 0.12 }} variants={{ hidden: {}, show: { transition: { staggerChildren: reduce ? 0 : 0.045, delayChildren: 0.1 } } }}>
+            <m.ol key={current.file} initial="hidden" animate="show" exit={{ opacity: 0 }} transition={{ duration: 0.12 }} variants={{ hidden: {}, show: { transition: { staggerChildren: reduce ? 0 : 0.045, delayChildren: 0.1 } } }}>
               {current.lines.map((line, i) => (
-                <motion.li key={i} className="flex whitespace-pre" variants={{ hidden: { opacity: 0, x: reduce ? 0 : -6 }, show: { opacity: 1, x: 0 } }}>
+                <m.li key={i} className="flex whitespace-pre" variants={{ hidden: { opacity: 0, x: reduce ? 0 : -6 }, show: { opacity: 1, x: 0 } }}>
                   <span aria-hidden="true" className="mr-4 w-5 shrink-0 select-none text-right text-subtle/70">
                     {i + 1}
                   </span>
@@ -124,12 +134,12 @@ export function CodeWindow({ profile, skills, projects, className }: CodeWindowP
                     ))}
                     {i === current.lines.length - 1 && <span aria-hidden="true" className="caret ml-1" />}
                   </span>
-                </motion.li>
+                </m.li>
               ))}
-            </motion.ol>
+            </m.ol>
           </AnimatePresence>
         </div>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }

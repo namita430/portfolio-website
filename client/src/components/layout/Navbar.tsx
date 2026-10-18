@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence } from 'motion/react';
+import * as m from 'motion/react-m';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { useSite } from '@/hooks/usePublicData';
@@ -32,7 +33,9 @@ export function Navbar() {
   }, []);
 
   // Close the mobile menu on navigation or Escape, and give focus back to the toggle.
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -59,7 +62,8 @@ export function Navbar() {
       )}
     >
       <nav aria-label="Primary" className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 sm:px-8">
-        <Link to={{ pathname: '/', hash: '' }} className="group flex items-center gap-2.5" aria-label={`${name} — home`}>
+        {/* No aria-label: the visible name is the link's accessible name (the monogram is aria-hidden). */}
+        <Link to={{ pathname: '/', hash: '' }} className="group flex items-center gap-2.5">
           <span aria-hidden="true" className="grid size-8 place-items-center rounded-lg border border-accent/40 bg-accent-soft font-display text-[0.95rem] font-semibold italic text-accent transition group-hover:bg-accent group-hover:text-accent-fg">
             {name
               .split(' ')
@@ -80,9 +84,7 @@ export function Navbar() {
             <li key={item.id}>
               <Link to={{ pathname: '/', hash: `#${item.id}` }} className={linkClass(item.id)} aria-current={active === item.id && onHome ? 'location' : undefined}>
                 {item.label}
-                {active === item.id && onHome && (
-                  <motion.span layoutId="nav-dot" className="absolute inset-x-3.5 -bottom-0.5 h-px bg-accent" aria-hidden="true" />
-                )}
+                {active === item.id && onHome && <span className="absolute inset-x-3.5 -bottom-0.5 h-px bg-accent" aria-hidden="true" />}
               </Link>
             </li>
           ))}
@@ -116,7 +118,7 @@ export function Navbar() {
 
       <AnimatePresence initial={false}>
         {open && (
-          <motion.div
+          <m.div
             id="mobile-menu"
             key="mobile-menu"
             initial={{ height: 0, opacity: 0 }}
@@ -146,7 +148,7 @@ export function Navbar() {
                 </li>
               )}
             </ul>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </header>

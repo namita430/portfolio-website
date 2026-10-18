@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, useReducedMotion } from 'motion/react';
+import * as m from 'motion/react-m';
 
 /**
  * Cycles through the owner's role titles. Screen readers get the full list once (the animated text is hidden
@@ -28,7 +29,7 @@ export function RotatingRoles({ roles }: { roles: string[] }) {
       ) : (
         <span aria-hidden="true" className="relative inline-flex h-[1.6em] overflow-hidden">
           <AnimatePresence mode="wait" initial={false}>
-            <motion.span
+            <m.span
               key={roles[index]}
               initial={{ y: '100%', opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -37,7 +38,7 @@ export function RotatingRoles({ roles }: { roles: string[] }) {
               className="inline-block whitespace-nowrap text-fg"
             >
               {roles[index]}
-            </motion.span>
+            </m.span>
           </AnimatePresence>
         </span>
       )}

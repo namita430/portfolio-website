@@ -71,7 +71,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [signOutLocally]);
 
   const value = useMemo<AuthState>(() => {
-    const status: AuthState['status'] = me.isPending ? 'loading' : me.isError ? 'unavailable' : me.data ? 'authed' : 'anon';
+    // A signed-in user stays signed in (in the UI) even if a later background re-check fails; the server remains
+    // the authority, and a real expiry arrives as a 401 from the next protected request.
+    const status: AuthState['status'] = me.data ? 'authed' : me.isPending ? 'loading' : me.isError ? 'unavailable' : 'anon';
     return { status, user: me.data?.user ?? null, login, logout, retry: () => void me.refetch() };
   }, [me.isPending, me.isError, me.data, login, logout, me]);
 

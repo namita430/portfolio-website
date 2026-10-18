@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser tests for the portfolio site and admin dashboard (Playwright driving an installed Chrome/Edge)",
+  "type": "module",
+  "scripts": {
+    "test": "node public.test.mjs && node a11y.test.mjs && node admin.test.mjs",
+    "test:public": "node public.test.mjs",
+    "test:a11y": "node a11y.test.mjs",
+    "test:admin": "node admin.test.mjs"
+  },
+  "dependencies": {
+    "axe-core": "^4.11.0",
+    "playwright-core": "^1.59.0"
+  }
+}

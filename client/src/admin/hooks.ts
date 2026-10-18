@@ -3,11 +3,15 @@ import { useQueryClient } from '@tanstack/react-query';
 
 /**
  * After any change in the dashboard, refetch what is on screen (admin lists AND the public site's data), so
- * the website reflects edits immediately without a manual reload.
+ * the website reflects edits immediately without a manual reload. The session check (/auth/me) is left alone:
+ * saving content never changes who is signed in, and re-checking it only adds a chance of a spurious sign-out UI.
  */
 export function useRefresh() {
   const qc = useQueryClient();
-  return useCallback(() => qc.invalidateQueries(), [qc]);
+  return useCallback(
+    () => qc.invalidateQueries({ predicate: (query) => !(query.queryKey[0] === 'admin' && query.queryKey[1] === 'me') }),
+    [qc],
+  );
 }
 
 /** Warns before closing the tab with unsaved changes. */

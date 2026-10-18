@@ -38,8 +38,10 @@ export function AdminLayout({ children }: { children: ReactNode }) {
   const overview = useQuery({ queryKey: ['admin', 'overview'], queryFn: adminApi.overview, refetchInterval: 60_000 });
   const unread = overview.data?.counts.messages.unread ?? 0;
 
-  useEffect(() => setOpen(false), [pathname]);
-  useEffect(() => window.scrollTo({ top: 0 }), [pathname]);
+  useEffect(() => {
+    setOpen(false);
+    window.scrollTo({ top: 0 });
+  }, [pathname]);
 
   async function signOut() {
     try {

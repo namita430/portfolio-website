@@ -70,8 +70,13 @@ function SettingsForm({ settings }: { settings: SiteSettings }) {
 
   // Selecting a theme previews it immediately; leaving without saving restores the saved one.
   const theme = watch('theme');
-  useEffect(() => applyTheme(theme), [theme]);
-  useEffect(() => () => applyTheme(savedTheme.current), []);
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
+  useEffect(() => {
+    const saved = savedTheme;
+    return () => applyTheme(saved.current);
+  }, []);
 
   const onSubmit = handleSubmit(async (values) => {
     try {

@@ -24,7 +24,9 @@ export function ProjectsPage() {
 
   // Debounce typing so we do not request on every keystroke.
   const [draft, setDraft] = useState(q);
-  useEffect(() => setDraft(q), [q]);
+  useEffect(() => {
+    setDraft(q);
+  }, [q]);
   useEffect(() => {
     if (draft === q) return;
     const t = setTimeout(() => update({ q: draft, page: '' }), 300);
